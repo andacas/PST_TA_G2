@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
             AsyncQuery async = new AsyncQuery();
             resultado = async.execute(datos).get();
 
-                    Intent i = new Intent(this, MenuPrincipal.class );
+                    Intent i = new Intent(this, ventana_principal.class );
                     i.putExtra("direccion", resultado[0]);
                     startActivity(i);
 
