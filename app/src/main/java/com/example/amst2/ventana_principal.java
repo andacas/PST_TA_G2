@@ -170,8 +170,8 @@ public void consultar_lista_imagenes(String url){
         }
 
     }
-    public void informacion_personal(){
-        Intent i = new Intent(this, ventana_principal.class );
+    public void informacion_personal(View view){
+        Intent i = new Intent(this, Informacion.class );
         i.putExtra("direccion", info_usuario);
         startActivity(i);
     }
