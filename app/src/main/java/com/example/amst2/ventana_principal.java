@@ -2,62 +2,59 @@ package com.example.amst2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
+
+import static com.example.amst2.BuildConfig.DEBUG;
 
 public class ventana_principal extends AppCompatActivity {
     private  String consultaonsulta = "https://tareaautonoma4.000webhostapp.com//getImage.php?id=1";
     private  String consulta_lista = "https://tareaautonoma4.000webhostapp.com/lista_imagenes.php";
-    ImageView imageView;
-    TextView textView,lista;
-
+    private String consulta_libros = "https://tareaautonoma4.000webhostapp.com/lista_libros.php";
+    private  String info_usuario = "";
+    Map<String,String> diccionario_lista = new HashMap<String,String>();
+    ArrayList<libro> lista_libro_por_genero = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ventana_principal);
-        textView = (TextView) findViewById(R.id.textView4);
-        lista = (TextView) findViewById(R.id.lista_imagenes);
-        imageView = (ImageView) findViewById(R.id.imageView);
         Bundle bundle = getIntent().getExtras();
         String text = bundle.getString("direccion");
-        ArrayList<String> lista = new ArrayList();
-        String[] arr_tex = text.split("\n");
-        textView.setText(text);
-        consulta_imagen(this,consultaonsulta);
-        consultar_lista(consulta_lista);
+        info_usuario = text;
+        consultar_lista_imagenes(consulta_lista);
+        crear_diccionarios_de_libros(consulta_libros);
+        init();
     }
-    public void consulta_imagen(ventana_principal view, String url){
-        String[] resultado = null;
 
-        try {
-            String[] datos = new String[]{
-                    "call",
-                    url
-            };
-            AsyncImageQuery async = new AsyncImageQuery();
-            resultado = async.execute(datos).get();
-
-            byte[] decodedString = Base64.decode(resultado[0], Base64.DEFAULT);
-            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-            imageView.setImageBitmap(decodedByte);
-
-
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-public void consultar_lista(String url){
+public void consultar_lista_imagenes(String url){
     String[] resultado = null;
     try {
         String[] datos = new String[]{
@@ -66,13 +63,88 @@ public void consultar_lista(String url){
         };
         AsyncImageQuery async = new AsyncImageQuery();
         resultado = async.execute(datos).get();
-        lista.setText(resultado[0]);
 
 
+        String[] arr_tex = resultado[0].split("///");
+        for(String lineas:arr_tex){
+            String[] valores = lineas.split("~");
+            diccionario_lista.put(valores[0],valores[1]);
+        }
+
+
+        //crear_diccionarios_de_libros(consulta_libros);
     } catch (ExecutionException e) {
         e.printStackTrace();
     } catch (InterruptedException e) {
         e.printStackTrace();
     }
 }
+    public void crear_diccionarios_de_libros(String url ){
+        String[] resultado = null;
+        try {
+            String[] datos = new String[]{
+                    "call",
+                    url
+            };
+            AsyncImageQuery async = new AsyncImageQuery();
+            resultado = async.execute(datos).get();
+            String[] arr_tex = resultado[0].split("///");
+            for(String lineas:arr_tex){
+                String[] valores = lineas.split("~");
+                libro l = new libro(valores[0],valores[1],valores[2],valores[3],valores[4],valores[5],diccionario_lista.get(valores[0]));
+                lista_libro_por_genero.add(l);
+            }
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    public void init() {
+        TableLayout stk = (TableLayout) findViewById(R.id.table_main);
+        TableRow tbrow0 = new TableRow(this);
+        TextView tv0 = new TextView(this);
+        tv0.setText(" Portada ");
+        tv0.setTextColor(Color.WHITE);
+        tbrow0.addView(tv0);
+        TextView tv1 = new TextView(this);
+        tv1.setText(" Informacion ");
+        tv1.setTextColor(Color.WHITE);
+        tbrow0.addView(tv1);
+        stk.addView(tbrow0);
+        for (libro i :lista_libro_por_genero) {
+            TableRow tbrow = new TableRow(this);
+            ImageView t1v = new ImageView(this);
+            i.consulta_imagen(i.url,t1v);
+
+            t1v.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LinearLayout anotherLayout = new LinearLayout(view.getContext());
+                    LinearLayout.LayoutParams linearLayoutParams =
+                            new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT);
+
+                    Button anotherButton = new Button(view.getContext());
+                    anotherButton.setText("I'm another button");
+                    anotherLayout.addView(anotherButton);
+
+                    addContentView(anotherLayout, linearLayoutParams);
+                }
+            });
+
+
+            tbrow.addView(t1v);
+            TextView t2v = new TextView(this);
+            t2v.setText("Titulo: "+i.titulo+"\nAutor: "+i.autor+"\n"+"Editorial: "+i.editorial);
+            t2v.setTextColor(Color.WHITE);
+            t2v.setGravity(Gravity.CENTER);
+            tbrow.addView(t2v);
+            stk.addView(tbrow);
+        }
+
+    }
+
+
 }
