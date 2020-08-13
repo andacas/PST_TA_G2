@@ -1,6 +1,7 @@
 package com.example.amst2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.solver.widgets.WidgetContainer;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -72,7 +73,7 @@ public void consultar_lista_imagenes(String url){
         }
 
 
-        //crear_diccionarios_de_libros(consulta_libros);
+
     } catch (ExecutionException e) {
         e.printStackTrace();
     } catch (InterruptedException e) {
@@ -112,7 +113,7 @@ public void consultar_lista_imagenes(String url){
         tv1.setTextColor(Color.WHITE);
         tbrow0.addView(tv1);
         stk.addView(tbrow0);
-        for (libro i :lista_libro_por_genero) {
+        for (final libro i :lista_libro_por_genero) {
             TableRow tbrow = new TableRow(this);
             ImageView t1v = new ImageView(this);
             i.consulta_imagen(i.url,t1v);
@@ -120,17 +121,41 @@ public void consultar_lista_imagenes(String url){
             t1v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    LinearLayout anotherLayout = new LinearLayout(view.getContext());
+                    final LinearLayout anotherLayout = new LinearLayout(view.getContext());
                     LinearLayout.LayoutParams linearLayoutParams =
                             new LinearLayout.LayoutParams(
-                                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                                    LinearLayout.LayoutParams.WRAP_CONTENT);
-
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.MATCH_PARENT);
+                    linearLayoutParams.gravity =Gravity.CENTER;
+                    anotherLayout.setGravity(Gravity.CENTER);
+                    anotherLayout.setBackgroundColor(Color.WHITE);
+                    anotherLayout.setOrientation(LinearLayout.VERTICAL);
+                    TextView texto_dinamico = new TextView(view.getContext());
+                    texto_dinamico.setText(i.titulo);
+                    TextView resumen = new TextView(view.getContext());
+                    resumen.setText(i.sinopsis);
                     Button anotherButton = new Button(view.getContext());
-                    anotherButton.setText("I'm another button");
-                    anotherLayout.addView(anotherButton);
 
+                    anotherButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            anotherLayout.removeAllViews();
+                            anotherLayout.setBackgroundColor(Color.alpha(0));
+                        }
+                    });
+
+                    anotherButton.setText("regresar");
+
+
+                    anotherLayout.addView(texto_dinamico);
+                    anotherLayout.addView(resumen);
+                    anotherLayout.addView(anotherButton);
                     addContentView(anotherLayout, linearLayoutParams);
+                }
+
+                public String get_libro(){
+                    String lib = i.autor;
+                    return lib;
                 }
             });
 
@@ -144,6 +169,11 @@ public void consultar_lista_imagenes(String url){
             stk.addView(tbrow);
         }
 
+    }
+    public void informacion_personal(){
+        Intent i = new Intent(this, ventana_principal.class );
+        i.putExtra("direccion", info_usuario);
+        startActivity(i);
     }
 
 
