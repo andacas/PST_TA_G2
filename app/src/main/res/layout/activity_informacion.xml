@@ -15,7 +15,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="77dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <TextView
@@ -29,7 +29,8 @@
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="74dp"
+            app:srcCompat="@android:mipmap/sym_def_app_icon"
             tools:srcCompat="@tools:sample/avatars" />
 
         <TextView
@@ -41,7 +42,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="466dp"
+            android:layout_height="435dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -54,13 +55,16 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    tools:text="Nombre" />
+                    android:gravity="center|right"
+                    android:text="Nombre: "
+                    tools:text="Nombre: " />
 
                 <TextView
                     android:id="@+id/txt_nombres"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
             </LinearLayout>
 
             <LinearLayout
@@ -73,77 +77,85 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Apellidos" />
+                    android:gravity="center|right"
+                    android:text="Apellidos: " />
 
                 <TextView
                     android:id="@+id/txt_apellidos"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="163dp"
+                android:layout_height="193dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="6dp"
-                    android:layout_height="30dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="correo" />
+                    android:gravity="center|right"
+                    android:text="correo: " />
 
                 <TextView
                     android:id="@+id/txt_correo"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="163dp"
+                android:layout_height="193dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="6dp"
-                    android:layout_height="30dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Celular" />
+                    android:gravity="center|right"
+                    android:text="Celular: " />
 
                 <TextView
                     android:id="@+id/txt_celular"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="366dp"
+                android:layout_height="193dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="6dp"
-                    android:layout_height="30dp"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:text="Favorito" />
+                    android:gravity="center|right"
+                    android:text="Favorito: " />
 
                 <TextView
                     android:id="@+id/txt_genero"
                     android:layout_width="wrap_content"
-                    android:layout_height="31dp"
-                    android:layout_weight="1" />
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left" />
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
 
             <Button
@@ -151,8 +163,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="menu_principal"
-                android:text="Button1" />
+                android:onClick="menu_categorias"
+                android:text="categoria" />
 
             <Button
                 android:id="@+id/button4"
@@ -160,7 +172,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:onClick="menu_principal"
-                android:text="Button2"
+                android:text="menu"
                 android:visibility="visible" />
 
             <Button
@@ -168,7 +180,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Button3" />
+                android:text="info" />
         </LinearLayout>
     </LinearLayout>
 
