@@ -1,40 +1,22 @@
 package com.example.amst2;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.solver.widgets.WidgetContainer;
-
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Base64;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import static com.example.amst2.BuildConfig.DEBUG;
 
 public class ventana_principal extends AppCompatActivity {
 
@@ -106,6 +88,7 @@ public void consultar_lista_imagenes(String url){
     public void init() {
         TableLayout stk = (TableLayout) findViewById(R.id.table_main);
         TableRow tbrow0 = new TableRow(this);
+        tbrow0.setPadding(20,20,20,20);
         TextView tv0 = new TextView(this);
         tv0.setText(" Portada ");
         tv0.setTextColor(Color.WHITE);
@@ -118,8 +101,9 @@ public void consultar_lista_imagenes(String url){
         for (final libro i :lista_libro_por_genero) {
             TableRow tbrow = new TableRow(this);
             ImageView t1v = new ImageView(this);
+            tbrow.setPadding(20,20,20,20);
             i.consulta_imagen(i.url,t1v);
-
+            //t1v.getLayoutParams().height = 20;
             t1v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -161,12 +145,20 @@ public void consultar_lista_imagenes(String url){
 
 
             tbrow.addView(t1v);
+
+
+
             TextView t2v = new TextView(this);
+
             t2v.setText("Titulo: "+i.titulo+"\nAutor: "+i.autor+"\n"+"Editorial: "+i.editorial);
             t2v.setTextColor(Color.WHITE);
-            t2v.setGravity(Gravity.CENTER);
+
             tbrow.addView(t2v);
+            tbrow.setVerticalGravity(Gravity.VERTICAL_GRAVITY_MASK);
+            t2v.layout( LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            t2v.setGravity(Gravity.CENTER);
             stk.addView(tbrow);
+
         }
 
     }

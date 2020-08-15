@@ -13,7 +13,6 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
 
     private  String consultaonsulta = "https://tareaautonoma4.000webhostapp.com/ingreso.php";
-    private TextView consulta;
     private EditText quary,quary2;
     public MainActivity() {
     }
@@ -22,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        consulta = (TextView) findViewById(R.id.textView);
+
         quary = (EditText) findViewById(R.id.query);
         quary2 = (EditText) findViewById(R.id.query2);
 

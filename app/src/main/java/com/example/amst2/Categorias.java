@@ -147,7 +147,7 @@ public class Categorias extends AppCompatActivity {
             TableRow tbrow = new TableRow(this);
             ImageView t1v = new ImageView(this);
             i.consulta_imagen(i.url,t1v);
-
+            tbrow.setPadding(20,20,20,20);
             t1v.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
